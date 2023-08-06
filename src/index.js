@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import App from './App';
 import Home from './components/Home';
 import New from './components/New';
@@ -18,6 +18,7 @@ const router = (
                 <Route path="/update" element={<Update />} />
                 <Route path="/cancel" element={<Cancel />} />
                 <Route path="/courses" element={<Courses />} />
+                <Route path="*" element={<ErrorPage />} /> {/* Catch-all route for unmatched routes */}
             </Route>
         </Routes>
     </BrowserRouter>
