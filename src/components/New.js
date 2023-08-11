@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Input from "./form/Input";
-import { useNavigate } from "react-router-dom";
+import {useNavigate, useOutletContext} from "react-router-dom";
 import "../styles.css";
 import MultiInput from "./form/MultiInput";
 import Checkbox from "./form/Checkbox";
@@ -24,6 +24,8 @@ const New = () => {
     const [genEd, setGenEd] = useState("");
     const [prior, setPrior] = useState("");
     const [info, setInfo] = useState("");
+
+    const { setJwtToken, setAlertClassName, setAlertMessage } = useOutletContext() || {};
 
     const navigate = useNavigate();
 
@@ -56,6 +58,10 @@ const New = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log("Form submitted")
+        console.log(semester, classType, roomNumber, department, courseTitle, courseNumber, sectionNumber, credits,
+            day, startTime, endTime, instructor, instructorConfirm, crn, genEd, prior, info)
+
         // build the request payload
         let payload = {
             semester: semester, // fall, spring, or summer and year
@@ -76,6 +82,27 @@ const New = () => {
             prior: prior, // prerequisite
             info: info, // special info
         }
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        };
+
+        fetch('http://localhost:5000/api/courses', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    setAlertClassName("alert-danger");
+                    setAlertMessage(data.message);
+                } else {
+                    console.log(data)
+                    navigate("/courses")
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     return (
@@ -89,6 +116,7 @@ const New = () => {
                     name="semesterCombobox"
                     onChange={(event) => setSemester(event.target.value)}
                     options={semesterOptions}
+                    value={semester}
                 />
                 <MultiInput
                     title="Select a class type"
@@ -96,6 +124,7 @@ const New = () => {
                     name="classTypeCombobox"
                     onChange={(event) => setClassType(event.target.value)}
                     options={classTypeOptions}
+                    value={classType}
                 />
                 {/*TODO: remove the need for a checkbox when selecting online*/}
                 <Checkbox
@@ -109,6 +138,7 @@ const New = () => {
                     name="departmentCombobox"
                     onChange={(event) => setDepartment(event.target.value)}
                     options={departmentOptions}
+                    value={department}
                 />
                 <Input
                     title="Course Title"
@@ -194,6 +224,7 @@ const New = () => {
                     name="genEdCombobox"
                     onChange={(event) => setGenEd(event.target.value)}
                     options={genEdOptions}
+                    value={genEd}
                 />
                 <Input
                     title="Prerequisite"
@@ -215,7 +246,7 @@ const New = () => {
                 <input
                     type="submit"
                     className="btn btn-primary"
-                    value="Submit"
+                    value="Add"
                 />
             </form>
         </div>
