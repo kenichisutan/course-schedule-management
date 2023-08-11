@@ -8,7 +8,7 @@ import Checkbox from "./form/Checkbox";
 const New = () => {
     const [semester, setSemester] = useState("");
     const [classType, setClassType] = useState("");
-    const [roomConfirm, setRoomConfirm] = useState("");
+    const [roomConfirm, setRoomConfirm] = useState(false);
     const [roomNumber, setRoomNumber] = useState("");
     const [department, setDepartment] = useState("");
     const [courseTitle, setCourseTitle] = useState("");
@@ -19,7 +19,7 @@ const New = () => {
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
     const [instructor, setInstructor] = useState("");
-    const [instructorConfirm, setInstructorConfirm] = useState("");
+    const [instructorConfirm, setInstructorConfirm] = useState(false);
     const [crn, setCrn] = useState("");
     const [genEd, setGenEd] = useState("");
     const [prior, setPrior] = useState("");
@@ -59,13 +59,14 @@ const New = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("Form submitted")
-        console.log(semester, classType, roomNumber, department, courseTitle, courseNumber, sectionNumber, credits,
+        console.log(semester, classType, roomConfirm, roomNumber, department, courseTitle, courseNumber, sectionNumber, credits,
             day, startTime, endTime, instructor, instructorConfirm, crn, genEd, prior, info)
 
         // build the request payload
         let payload = {
             semester: semester, // fall, spring, or summer and year
             classType: classType, // online or in-person
+            roomConfirm: roomConfirm, // room confirmation
             roomNumber: roomNumber, // room number if in-person
             department: department, // department title
             courseTitle: courseTitle, // course title
@@ -127,10 +128,23 @@ const New = () => {
                     value={classType}
                 />
                 {/*TODO: remove the need for a checkbox when selecting online*/}
+                {/*TODO: fix onChange not being triggered*/}
                 <Checkbox
                     title="Has a room been secured with facilities?"
                     message="Please secure a room with facilities before submitting this form."
-                    onChange={(event) => setRoomConfirm(event.target.checked)}
+                    onChange={(event) => {
+                        console.log("Checkbox clicked");
+                        setRoomConfirm(event.target.checked);
+                    }}
+                />
+
+                <Input
+                    title="Room Number"
+                    type="room-number"
+                    className="form-control"
+                    name="room-number"
+                    autoComplete="room-number-new"
+                    onChange={(event) => setRoomNumber(event.target.value)}
                 />
                 <MultiInput
                     title="Select a department"
