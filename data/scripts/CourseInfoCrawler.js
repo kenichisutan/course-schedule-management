@@ -1,3 +1,6 @@
+// TODO: Update existing code to simultaneously create a JSON file containing a list of all departments
+// TODO: Update existing code to simultaneously create a JSON file containing a list of all GenED options
+
 // Define an object containing the timetable data
 
 
