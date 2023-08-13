@@ -7,6 +7,8 @@ import Checkbox from "./form/Checkbox";
 import * as FileSaver from "file-saver";
 import * as XLSX from "sheetjs-style";
 
+// TODO: Make sure scripts for data are run at the beginning of launching the app
+
 const New = () => {
     const [semester, setSemester] = useState("");
     const [classType, setClassType] = useState("");
@@ -170,6 +172,8 @@ const New = () => {
                     options={departmentOptions}
                     value={department}
                 />
+                {/*TODO: update so that while typing suggestions of existing courses should be displayed*/}
+                {/*TODO: update so that if a course already previously exist, autofill the fields with the past entry*/}
                 <Input
                     title="Course Title"
                     type="course-title"
