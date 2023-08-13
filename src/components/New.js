@@ -4,6 +4,8 @@ import {useNavigate, useOutletContext} from "react-router-dom";
 import "../styles.css";
 import MultiInput from "./form/MultiInput";
 import Checkbox from "./form/Checkbox";
+import * as FileSaver from "file-saver";
+import * as XLSX from "sheetjs-style";
 
 const New = () => {
     const [semester, setSemester] = useState("");
@@ -63,26 +65,28 @@ const New = () => {
             day, startTime, endTime, instructor, instructorConfirm, crn, genEd, prior, info)
 
         // build the request payload
-        let payload = {
-            semester: semester, // fall, spring, or summer and year
-            classType: classType, // online or in-person
-            roomConfirm: roomConfirm, // room confirmation
-            roomNumber: roomNumber, // room number if in-person
-            department: department, // department title
-            courseTitle: courseTitle, // course title
-            courseNumber: courseNumber, // course number
-            sectionNumber: sectionNumber, // section number
-            credits: credits, // number of credits
-            day: day, // day of the week
-            startTime: startTime, // start time
-            endTime: endTime, // end time
-            instructor: instructor, // instructor name
-            instructorConfirm: instructorConfirm, // hire confirmation
-            crn: crn, // course registration number
-            genEd: genEd, // general education requirement
-            prior: prior, // prerequisite
-            info: info, // special info
-        }
+        let payload = [
+            {
+            "semester": semester, // fall, spring, or summer and year
+            "classType": classType, // online or in-person
+            "roomConfirm": roomConfirm, // room confirmation
+            "roomNumber": roomNumber, // room number if in-person
+            "department": department, // department title
+            "courseTitle": courseTitle, // course title
+            "courseNumber": courseNumber, // course number
+            "sectionNumber": sectionNumber, // section number
+            "credits": credits, // number of credits
+            "day": day, // day of the week
+            "startTime": startTime, // start time
+            "endTime": endTime, // end time
+            "instructor": instructor, // instructor name
+            "instructorConfirm": instructorConfirm, // hire confirmation
+            "crn": crn, // course registration number
+            "genEd": genEd, // general education requirement
+            "prior": prior, // prerequisite
+            "info": info, // special info
+            },
+        ]
 
         const requestOptions = {
             method: 'POST',
@@ -90,20 +94,32 @@ const New = () => {
             body: JSON.stringify(payload)
         };
 
-        fetch('http://localhost:5000/api/courses', requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    setAlertClassName("alert-danger");
-                    setAlertMessage(data.message);
-                } else {
-                    console.log(data)
-                    navigate("/courses")
-                }
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        // TODO: unfinished code for database integration
+        // fetch('http://localhost:5000/api/courses', requestOptions)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         if (data.error) {
+        //             setAlertClassName("alert-danger");
+        //             setAlertMessage(data.message);
+        //         } else {
+        //             console.log(data)
+        //             navigate("/courses")
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.log(error)
+        //     })
+
+        // Excel export
+        const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+        const fileExtension = '.xlsx';
+        const fileName = 'courses';
+
+        const ws = XLSX.utils.json_to_sheet(payload);
+        const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+        const data = new Blob([excelBuffer], { type: fileType });
+        FileSaver.saveAs(data, fileName + fileExtension);
     }
 
     return (
@@ -223,7 +239,7 @@ const New = () => {
                     message="Please confirm the instructor before submitting this form."
                     onChange={(event) => {
                         console.log("Checkbox clicked");
-                        setRoomConfirm(event.target.checked);
+                        setInstructorConfirm(event.target.checked);
                     }}
                 />
                 <Input
