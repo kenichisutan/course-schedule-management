@@ -128,7 +128,6 @@ const New = () => {
                     value={classType}
                 />
                 {/*TODO: remove the need for a checkbox when selecting online*/}
-                {/*TODO: fix onChange not being triggered*/}
                 <Checkbox
                     title="Has a room been secured with facilities?"
                     message="Please secure a room with facilities before submitting this form."
@@ -222,7 +221,10 @@ const New = () => {
                 <Checkbox
                     title="Has the instructor been approved as a new hire by the ADAA / is a current faculty member?"
                     message="Please confirm the instructor before submitting this form."
-                    onChange={(event) => setInstructorConfirm(event.target.checked)}
+                    onChange={(event) => {
+                        console.log("Checkbox clicked");
+                        setRoomConfirm(event.target.checked);
+                    }}
                 />
                 <Input
                     title="CRN"
