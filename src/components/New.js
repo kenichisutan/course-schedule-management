@@ -161,6 +161,7 @@ const New = () => {
                     autoComplete="room-number-new"
                     onChange={(event) => setRoomNumber(event.target.value)}
                 />
+                {/*TODO: create a list of options of departments from an existing file*/}
                 <MultiInput
                     title="Select a department"
                     className="form-select"
