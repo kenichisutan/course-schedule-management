@@ -1,24 +1,18 @@
-import React, { useState, forwardRef } from "react";
+import React, { forwardRef } from "react";
 
-const Checkbox = forwardRef((props, ref) => {
-    const [isChecked, setIsChecked] = useState(false);
-
-    const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
-    };
-
+const Checkbox = forwardRef(({ title, message, onChange, isChecked }, ref) => {
     return (
         <div>
             <label>
                 <input
                     type="checkbox"
                     checked={isChecked}
-                    onChange={handleCheckboxChange}
-                    ref={ref} // Pass the ref to the input element
+                    onChange={onChange}
+                    ref={ref}
                 />
-                {props.title}
+                {title}
             </label>
-            <p>{props.message}</p>
+            <p>{message}</p>
         </div>
     );
 });
