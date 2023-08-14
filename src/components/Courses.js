@@ -39,7 +39,7 @@ const Courses = () => {
                             </td>
                             <td>{course.department} {course.number}</td>
                             <td>
-                                <Link to={`/course/${course.id}`}>{course.courseName}</Link>
+                                <Link to={`/course/${course.courseName}`}>{course.courseName}</Link>
                             </td>
                             <td>{course.credits}</td>
                             <td>{course.day} {course.startTime} - {course.endTime}</td>
