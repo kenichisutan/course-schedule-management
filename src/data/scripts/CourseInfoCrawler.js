@@ -1,4 +1,4 @@
-// TODO: Update existing code to simultaneously create a JSON file containing a list of all departments
+// TODO: Update existing code to simultaneously create a JSON file containing a list of all departmentGenEds
 // TODO: Update existing code to simultaneously create a JSON file containing a list of all GenED options
 
 // Define an object containing the timetable data
@@ -9,7 +9,7 @@ const fs = require('fs');
 
 async function launchPuppeteerSpring() {
     let inputData = ['Class Info'];
-    let department = "";
+    let departmentGenEd = "";
     let courseNames = [];
     const timetableData = {};
     const courseNameToCode = {};
@@ -26,33 +26,56 @@ async function launchPuppeteerSpring() {
 
     for (let i = 0; i < inputData.length; i += 11) {
         // Split the block into inputData
+        // console.log("inputData:" + inputData + "\n");
 
         // Extract the relevant information from the inputData
 
         const courseCode = inputData[2 + i];
+
+        // split by whitespace
+        let [department, number, section] = [null, null, null];
+        if(courseCode) {
+             [department, number, section] = courseCode.split(" ");
+        }
+
         const subject = inputData[1 + i];
         const courseName = inputData[3 + i];
         const credits = inputData[4 + i];
         const time = inputData[5 + i];
-        const professor = inputData[6 + i];
+
+        let [day, times, startTime, endTime] = [null, null, null, null];
+        if(time) {
+            [day, times] = time.split(" ");
+            if(times) {
+                [startTime, endTime] = times.split("-");
+            }
+        }
+
+        const instructor = inputData[6 + i];
         const crn = inputData[7 + i];
-        const gened = inputData[8 + i];
+        const genEd = inputData[8 + i];
         const prior = inputData[9 + i];
         const specialInfo = inputData[10 + i];
         //Determine if this course is a Gened course
-        department += courseName + "\", \"";
+        departmentGenEd += courseName + "\", \"";
         // Add the course to the timetableData object
+
         timetableData[courseCode] = {
             subject: subject,
-            courseCode: courseCode,
+            department: department,
+            number: number,
+            section: section,
             courseName: courseName,
             credits: credits,
-            time: time,
-            professor: professor,
+            day: day,
+            startTime: startTime,
+            endTime: endTime,
+            instructor: instructor,
             crn: crn,
-            gened: gened,
+            genEd: genEd,
             prior: prior,
             specialInfo: specialInfo
+
         };
         // Add the courseName to the courseName object
         if (courseNames.indexOf(courseName) === -1 && courseName !== null) {
@@ -82,7 +105,7 @@ async function launchPuppeteerSpring() {
 }
 async function launchPuppeteerSummer() {
     let inputData = ['Class Info'];
-    let department = "";
+    let departmentGenEd = "";
     let courseNames = [];
     const timetableData = {};
     const courseNameToCode = {};
@@ -99,33 +122,56 @@ async function launchPuppeteerSummer() {
 
     for (let i = 0; i < inputData.length; i += 11) {
         // Split the block into inputData
+        // console.log("inputData:" + inputData + "\n");
 
         // Extract the relevant information from the inputData
 
         const courseCode = inputData[2 + i];
+
+        // split by whitespace
+        let [department, number, section] = [null, null, null];
+        if(courseCode) {
+            [department, number, section] = courseCode.split(" ");
+        }
+
         const subject = inputData[1 + i];
         const courseName = inputData[3 + i];
         const credits = inputData[4 + i];
         const time = inputData[5 + i];
-        const professor = inputData[6 + i];
+
+        let [day, times, startTime, endTime] = [null, null, null, null];
+        if(time) {
+            [day, times] = time.split(" ");
+            if(times) {
+                [startTime, endTime] = times.split("-");
+            }
+        }
+
+        const instructor = inputData[6 + i];
         const crn = inputData[7 + i];
-        const gened = inputData[8 + i];
+        const genEd = inputData[8 + i];
         const prior = inputData[9 + i];
         const specialInfo = inputData[10 + i];
         //Determine if this course is a Gened course
-        department += courseName + "\", \"";
+        departmentGenEd += courseName + "\", \"";
         // Add the course to the timetableData object
+
         timetableData[courseCode] = {
             subject: subject,
-            courseCode: courseCode,
+            department: department,
+            number: number,
+            section: section,
             courseName: courseName,
             credits: credits,
-            time: time,
-            professor: professor,
+            day: day,
+            startTime: startTime,
+            endTime: endTime,
+            instructor: instructor,
             crn: crn,
-            gened: gened,
+            genEd: genEd,
             prior: prior,
             specialInfo: specialInfo
+
         };
         // Add the courseName to the courseName object
         if (courseNames.indexOf(courseName) === -1 && courseName !== null) {
@@ -155,7 +201,7 @@ async function launchPuppeteerSummer() {
 }
 async function launchPuppeteerFall() {
     let inputData = ['Class Info'];
-    let department = "";
+    let departmentGenEd = "";
     let courseNames = [];
     const timetableData = {};
     const courseNameToCode = {};
@@ -172,33 +218,56 @@ async function launchPuppeteerFall() {
 
     for (let i = 0; i < inputData.length; i += 11) {
         // Split the block into inputData
+        // console.log("inputData:" + inputData + "\n");
 
         // Extract the relevant information from the inputData
 
         const courseCode = inputData[2 + i];
+
+        // split by whitespace
+        let [department, number, section] = [null, null, null];
+        if(courseCode) {
+            [department, number, section] = courseCode.split(" ");
+        }
+
         const subject = inputData[1 + i];
         const courseName = inputData[3 + i];
         const credits = inputData[4 + i];
         const time = inputData[5 + i];
-        const professor = inputData[6 + i];
+
+        let [day, times, startTime, endTime] = [null, null, null, null];
+        if(time) {
+            [day, times] = time.split(" ");
+            if(times) {
+                [startTime, endTime] = times.split("-");
+            }
+        }
+
+        const instructor = inputData[6 + i];
         const crn = inputData[7 + i];
-        const gened = inputData[8 + i];
+        const genEd = inputData[8 + i];
         const prior = inputData[9 + i];
         const specialInfo = inputData[10 + i];
         //Determine if this course is a Gened course
-        department += courseName + "\", \"";
+        departmentGenEd += courseName + "\", \"";
         // Add the course to the timetableData object
+
         timetableData[courseCode] = {
             subject: subject,
-            courseCode: courseCode,
+            department: department,
+            number: number,
+            section: section,
             courseName: courseName,
             credits: credits,
-            time: time,
-            professor: professor,
+            day: day,
+            startTime: startTime,
+            endTime: endTime,
+            instructor: instructor,
             crn: crn,
-            gened: gened,
+            genEd: genEd,
             prior: prior,
             specialInfo: specialInfo
+
         };
         // Add the courseName to the courseName object
         if (courseNames.indexOf(courseName) === -1 && courseName !== null) {
