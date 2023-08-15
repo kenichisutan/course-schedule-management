@@ -13,5 +13,6 @@ JSON data files should be stored in ./src/data if successful.
   - [React Router](https://reactrouter.com/)
 - Bootstrap
 #### Back-end:
-- JavaScript
-- No secondary languaged used for back-end. To change upon database implementation(?)
+- Python
+  - [Flask](https://flask.palletsprojects.com/en/)
+- MySQL
