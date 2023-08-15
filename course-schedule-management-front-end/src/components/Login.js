@@ -22,13 +22,14 @@ const Login = () => {
             password: password,
         }
 
-        // TODO: Fix ongoing bug where failed to fetch
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include', // Solve CORS issue
             body: JSON.stringify(payload)
-        }
+        };
 
         const backendUrl = 'http://localhost:5000';
         const authenticateUrl = `${backendUrl}/authenticate`;
@@ -36,6 +37,7 @@ const Login = () => {
         fetch(authenticateUrl, requestOptions)
             .then((response) => response.json())
             .then((data) => {
+                console.log(data)
                 if (data.error) {
                     setAlertClassName("alert-danger");
                     setAlertMessage(data.message);

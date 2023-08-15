@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 from passlib.hash import sha256_crypt
 import mysql.connector
 
@@ -11,14 +12,19 @@ con = mysql.connector.connect(user="root",
                               database="course-schedule")
 
 app = Flask(__name__)
+CORS(app, supports_credentials=True)
 
 
-@app.route('/authenticate', methods=[ 'POST' ])
+@app.route('/authenticate', methods=['POST'])
 def api_authenticate():
     data = request.json
 
-    username = request.form[ 'username' ]
-    password = request.form[ 'password' ]
+    if data:
+        username = data.get('username')
+        password = data.get('password')
+    else:
+        return jsonify({"error": True,
+                        "message": "Invalid JSON payload"}), 400
 
     return auth.authenticate(con, username, password)
 
