@@ -3,7 +3,7 @@ import Input from "./form/Input";
 import {useNavigate, useOutletContext} from "react-router-dom";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const { setJwtToken } = useOutletContext()
@@ -14,15 +14,15 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("email: " + email + ", password: " + password);
+        console.log("username: " + username + ", password: " + password);
 
         // build the request payload
         let payload = {
-            email: email,
+            username: username,
             password: password,
         }
 
-        // TODO: Placeholder code
+        // TODO: Fix ongoing bug where failed to fetch
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -30,7 +30,10 @@ const Login = () => {
             body: JSON.stringify(payload)
         }
 
-        fetch('/authenticate', requestOptions)
+        const backendUrl = 'http://localhost:5000';
+        const authenticateUrl = `${backendUrl}/authenticate`;
+
+        fetch(authenticateUrl, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -55,12 +58,12 @@ const Login = () => {
             <hr/>
             <form onSubmit={handleSubmit}>
                 <Input
-                    title="Email Address"
-                    type="email"
+                    title="Username"
+                    type="username"
                     className="form-control"
-                    name="email"
-                    autoComplete="email-new"
-                    onChange={(event) => setEmail(event.target.value)}
+                    name="username"
+                    autoComplete="username-new"
+                    onChange={(event) => setUsername(event.target.value)}
                 />
                 <Input
                     title="Password"
