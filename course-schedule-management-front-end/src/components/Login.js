@@ -7,6 +7,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
 
     const { setJwtToken } = useOutletContext()
+    const { setIsAdmin } = useOutletContext()
     const { setAlertClassName } = useOutletContext()
     const { setAlertMessage } = useOutletContext()
 
@@ -34,6 +35,8 @@ const Login = () => {
         const backendUrl = 'http://localhost:5000';
         const authenticateUrl = `${backendUrl}/authenticate`;
 
+        let access_token = "";
+
         fetch(authenticateUrl, requestOptions)
             .then((response) => response.json())
             .then((data) => {
@@ -46,11 +49,40 @@ const Login = () => {
                     setAlertClassName("d-none");
                     setAlertMessage("");
                     navigate("/");
+
+                    // Perform admin authentication fetch here, after access_token is available
+                    let adminPayload = {
+                        access_token: data.access_token,
+                    }
+                    const authenticateAdminUrl = `${backendUrl}/admin_authenticate`;
+                    const adminRequestOptions = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify(adminPayload)
+                    }
+                    fetch(authenticateAdminUrl, adminRequestOptions)
+                        .then((response) => response.json())
+                        .then((data) => {
+                            console.log(data)
+                            if (data.error) {
+                                setIsAdmin(false);
+                            } else {
+                                setIsAdmin(true);
+                            }
+                        })
+                        .catch((error) => {
+                            setAlertClassName("alert-danger");
+                            setAlertMessage("Error: " + error);
+                        })
                 }
             })
             .catch((error) => {
                 setAlertClassName("alert-danger");
                 setAlertMessage("Error: " + error);
+                return;
             })
     }
 

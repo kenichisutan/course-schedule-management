@@ -32,16 +32,52 @@ def authenticate(connection, username, password):
 
     # If all are correct
     print("Login successful")
-    accessToken = generateAccessToken(result[ 0 ])
+    accessToken = generateAccessToken(result[ 0 ], result[ 4 ])
     return jsonify({'success': True,
                     'message': 'Authentication successful',
                     'access_token': accessToken}), 200  # 200 = OK
 
 
-def generateAccessToken(userID):
+def adminAuthenticate(accessToken):
+    if not accessToken:
+        print("ERROR: Missing access token")
+        return jsonify({"error": True,
+                        "message": "Missing access token"}), 400
+
+    # Decode the access token and see if account_type field is admin
+    key = 'thisIsASecretKeyAndNoOneWillEverGuessIt'
+    try:
+        decodedToken = jwt.decode(accessToken, key, algorithms='HS256')
+    except jwt.ExpiredSignatureError:
+        print("ERROR: Access token expired")
+        return jsonify({"error": True,
+                        "message": "Access token expired"}), 401
+    except jwt.InvalidTokenError:
+        print("ERROR: Invalid access token")
+        return jsonify({"error": True,
+                        "message": "Invalid access token"}), 401
+
+    if "account_type" in decodedToken:
+        account_type = decodedToken[ "account_type" ]
+    else:
+        print("ERROR: Invalid access token")
+        return jsonify({"error": True,
+                        "message": "Invalid access token"}), 401
+
+    if account_type != "admin":
+        print("ERROR: Not an admin")
+        return jsonify({"error": True,
+                        "message": "Not an admin"}), 401
+
+    return jsonify({"success": True,
+                    "message": "Admin authentication successful"}), 200
+
+
+def generateAccessToken(userID, accountType):
     # Define the payload
     payload = {
         'sub': userID,  # Subject (user ID)
+        'account_type': accountType,  # Account type
         'iat': datetime.datetime.utcnow(),  # Issued at timestamp
         'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)  # Expiry timestamp (1 hour from now)
     }

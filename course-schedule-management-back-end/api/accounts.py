@@ -37,6 +37,7 @@ def main():
     accountType = "admin"
 
     addNewAccount(connection, username, password, email, accountType)
+    addNewAccount(connection, "moderator", sha256_crypt.hash("moderator"), "moderator@moderator.com", "basic")
 
     connection.close()
 

@@ -4,6 +4,7 @@ import Alert from "./components/Alert";
 
 function App() {
     const [jwtToken, setJwtToken] = useState("");
+    const [isAdmin, setIsAdmin] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
     const [alertClassName, setAlertClassName] = useState("d-none");
 
@@ -11,12 +12,14 @@ function App() {
 
     const logOut = () => {
         setJwtToken("");
+        setIsAdmin(false)
         setAlertClassName("alert-success");
         setAlertMessage("You have been logged out");
         navigate("/login");
     }
 
     useEffect(() => {
+        // TODO: Refresh code
         if(jwtToken === "") {
             const requestOptions = {
                 method: "GET",
@@ -81,7 +84,7 @@ function App() {
                             >
                                 View all courses
                             </Link>
-                            {jwtToken !== "" &&
+                            {jwtToken !== "" && isAdmin &&
                                 <>
                                     <Link
                                         to="/manage"
@@ -100,7 +103,7 @@ function App() {
                         className={alertClassName}
                     />
                     <Outlet context={{
-                        jwtToken, setJwtToken, setAlertClassName, setAlertMessage,
+                        jwtToken, setJwtToken, setIsAdmin, setAlertClassName, setAlertMessage,
                     }}/>
                 </div>
             </div>
