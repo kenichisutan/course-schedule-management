@@ -8,12 +8,14 @@ import Update from './components/Update';
 import Cancel from './components/Cancel';
 import ErrorPage from './components/ErrorPage';
 import Courses from './components/Courses';
+import Login from "./components/Login";
 
 const router = (
     <BrowserRouter>
         <Routes>
             <Route path="/" element={<App />} errorElement={<ErrorPage />}>
                 <Route index element={<Home />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/new" element={<New />} />
                 <Route path="/update" element={<Update />} />
                 <Route path="/cancel" element={<Cancel />} />
