@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import jsonify, request
 from passlib.hash import sha256_crypt
 import jwt
 import datetime
@@ -75,6 +75,30 @@ def adminAuthenticate(accessToken):
 
     return jsonify({"success": True,
                     "message": "Admin authentication successful"}), 200
+
+
+def verifyAdminCookie():
+    try:
+        # Retrieve the access token from the request's cookies
+        access_token = request.cookies.get('access_token')
+
+        key = 'thisIsASecretKeyAndNoOneWillEverGuessIt'
+        payload = jwt.decode(access_token, key, algorithms=[ 'HS256' ])
+
+        # Check if the user has admin role
+        if 'account_type' in payload and payload[ 'account_type' ] == 'admin':
+            return jsonify(message='Admin access granted',
+                           success=True), 200 # 200 = OK
+        else:
+            return jsonify(message='Admin access denied',
+                           success=False), 403
+
+    except jwt.ExpiredSignatureError:
+        return jsonify(message='Token has expired',
+                       success=False), 401
+    except jwt.DecodeError:
+        return jsonify(message='Token is invalid',
+                       success=True), 401
 
 
 def generateAccessToken(userID, accountType):

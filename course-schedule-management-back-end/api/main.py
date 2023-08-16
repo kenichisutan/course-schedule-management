@@ -36,6 +36,11 @@ def api_admin_authenticate():
     return auth.adminAuthenticate(accessToken)
 
 
+@app.route('/admin', methods=[ 'GET' ])
+def admin_endpoint():
+    return auth.verifyAdminCookie()
+
+
 if __name__ == '__main__':
     print("Server is starting...")
     print("Connecting to database...")
