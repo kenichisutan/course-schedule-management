@@ -1,3 +1,4 @@
+from flask import jsonify
 from passlib.hash import sha256_crypt
 import mysql.connector
 
@@ -24,6 +25,27 @@ def addNewAccount(connection, username, password, email, accountType):
     cursor.close()
 
     print("New user added")
+
+
+def retrieveUsers(connection):
+    cursor = connection.cursor()
+
+    query = "SELECT userID, username, email, accountType FROM Login"
+
+    cursor.execute(query)
+
+    # Convert result to json
+    jsonResult = []
+
+    for(userID, username, email, accountType) in cursor:
+        jsonResult.append({'userID': userID,
+                           'username': username,
+                           'email': email,
+                           'accountType': accountType})
+
+    cursor.close()
+
+    return jsonResult
 
 
 def main():

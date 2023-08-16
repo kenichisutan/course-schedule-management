@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Navigate} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 
 const Manage = () => {
     const [admin, setAdmin] = useState(false);
@@ -38,13 +38,19 @@ const Manage = () => {
     return(
         <>
             <div className="text-center">
-                <h2>Course Schedule Management</h2>
+                <h2>Manage Users</h2>
                 <hr />
                 {/* if admin is true, display the following */}
                 {admin ? (
                     <>
                         <h3>Manage</h3>
                         <hr />
+                        <Link
+                            to="/manage/users"
+                            className="list-group-item list-group-item-action"
+                        >
+                            View users
+                        </Link>
                     </>
                 ) : (
                     <>

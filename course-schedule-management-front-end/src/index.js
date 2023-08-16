@@ -11,6 +11,7 @@ import Courses from './components/Courses';
 import Login from "./components/Login";
 import Cookies from "js-cookie";
 import Manage from "./components/Manage";
+import Users from "./components/Users";
 
 const isAuthenticated = () => {
     const accessToken = Cookies.get('access_token');
@@ -30,6 +31,8 @@ const router = (
                 <Route path="/update" element={isAuthenticated() ? <Update /> : <Navigate to="/login" />} />
                 <Route path="/cancel" element={isAuthenticated() ? <Cancel /> : <Navigate to="/login" />} />
                 <Route path="/manage" element={isAuthenticated() ? <Manage /> : <Navigate to="/login" />} />
+                <Route path="/manage/users" element={isAuthenticated() ? <Users /> : <Navigate to="/login" />} />
+                {/* Catch-all route for unmatched routes */}
                 <Route path="*" element={<ErrorPage />} /> {/* Catch-all route for unmatched routes */}
             </Route>
         </Routes>

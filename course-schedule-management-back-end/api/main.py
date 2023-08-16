@@ -37,8 +37,12 @@ def api_admin_authenticate():
 
 
 @app.route('/admin', methods=[ 'GET' ])
-def admin_endpoint():
+def api_admin_endpoint():
     return auth.verifyAdminCookie()
+
+@app.route('/users', methods=[ 'GET' ])
+def api_retrieve_users():
+    return accounts.retrieveUsers(con)
 
 
 if __name__ == '__main__':
