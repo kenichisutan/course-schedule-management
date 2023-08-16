@@ -216,3 +216,7 @@ packages/react-devtools-shell/dist
 packages/react-devtools-timeline/dist
 
 exports
+course-schedule-management-front-end/src/data/TimetableDataFall.js
+course-schedule-management-front-end/src/data/TimetableDataSpring.js
+course-schedule-management-front-end/src/data/TimetableDataSummer.js
+course-schedule-management-front-end/src/Excelexport.js
