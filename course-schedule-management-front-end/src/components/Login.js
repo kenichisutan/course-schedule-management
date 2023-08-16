@@ -35,8 +35,6 @@ const Login = () => {
         const backendUrl = 'http://localhost:5000';
         const authenticateUrl = `${backendUrl}/authenticate`;
 
-        let access_token = "";
-
         fetch(authenticateUrl, requestOptions)
             .then((response) => response.json())
             .then((data) => {
@@ -45,6 +43,8 @@ const Login = () => {
                     setAlertClassName("alert-danger");
                     setAlertMessage(data.message);
                 } else {
+                    //document.cookie = `access_token=${data.access_token}; path=/`;
+
                     setJwtToken(data.access_token);
                     setAlertClassName("d-none");
                     setAlertMessage("");

@@ -60,24 +60,36 @@ function App() {
                             <Link to="/" className="list-group-item list-group-item-action">
                                 Home
                             </Link>
-                            <Link
-                                to="/new"
-                                className="list-group-item list-group-item-action"
-                            >
-                                Add a new course
-                            </Link>
-                            <Link
-                                to="/update"
-                                className="list-group-item list-group-item-action"
-                            >
-                                Update an existing course
-                            </Link>
-                            <Link
-                                to="/cancel"
-                                className="list-group-item list-group-item-action"
-                            >
-                                Cancel a course
-                            </Link>
+                            {jwtToken !== "" &&
+                                <>
+                                    <Link
+                                        to="/new"
+                                        className="list-group-item list-group-item-action"
+                                    >
+                                        Add a new course
+                                    </Link>
+                                </>
+                            }
+                            {jwtToken !== "" &&
+                                <>
+                                    <Link
+                                        to="/update"
+                                        className="list-group-item list-group-item-action"
+                                    >
+                                        Update an existing course
+                                    </Link>
+                                </>
+                            }
+                            {jwtToken !== "" &&
+                                <>
+                                    <Link
+                                        to="/cancel"
+                                        className="list-group-item list-group-item-action"
+                                    >
+                                        Cancel a course
+                                    </Link>
+                                </>
+                            }
                             <Link
                                 to="/courses"
                                 className="list-group-item list-group-item-action"

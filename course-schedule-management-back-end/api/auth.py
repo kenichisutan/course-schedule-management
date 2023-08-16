@@ -33,9 +33,13 @@ def authenticate(connection, username, password):
     # If all are correct
     print("Login successful")
     accessToken = generateAccessToken(result[ 0 ], result[ 4 ])
-    return jsonify({'success': True,
-                    'message': 'Authentication successful',
-                    'access_token': accessToken}), 200  # 200 = OK
+    response = jsonify({'success': True,
+                        'message': 'Authentication successful',
+                        'access_token': accessToken})
+
+    # Set the access token as an HttpOnly cookie
+    response.set_cookie('access_token', accessToken)
+    return response, 200  # 200 = OK
 
 
 def adminAuthenticate(accessToken):
