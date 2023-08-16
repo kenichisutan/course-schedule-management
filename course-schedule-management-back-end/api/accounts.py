@@ -34,6 +34,11 @@ def retrieveUsers(connection):
 
     cursor.execute(query)
 
+    if cursor is None:
+        print("ERROR: No users found")
+        return jsonify({"error": True,
+                        "message": "No users found"}), 404
+
     # Convert result to json
     jsonResult = []
 
@@ -45,7 +50,7 @@ def retrieveUsers(connection):
 
     cursor.close()
 
-    return jsonResult
+    return jsonResult, 200
 
 
 def main():

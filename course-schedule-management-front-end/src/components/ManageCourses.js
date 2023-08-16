@@ -1,10 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {Link, Navigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
-// TODO: Add a button to delete a user
-// TODO: Add a button to add a user
-
-const Manage = () => {
+const ManageCourses = () => {
     const [admin, setAdmin] = useState(false);
 
     const handleAdminCheck = async () => {
@@ -38,37 +35,26 @@ const Manage = () => {
         };
     }, []);
 
-    return(
+    return (
         <>
             <div className="text-center">
-                <h2>Manage Users</h2>
+                <h2>Manage Courses</h2>
+                <div className="col text-end">
+                    <Link to={`/manage/`}><span className="badge bg-primary">Back</span></Link>
+                </div>
                 <hr />
                 {/* if admin is true, display the following */}
                 {admin ? (
                     <>
-                        <h3>Manage</h3>
-                        <hr />
-                        <Link
-                            to="/manage/users"
-                            className="list-group-item list-group-item-action"
-                        >
-                            View users
-                        </Link>
-                        <Link
-                            to="/manage/courses"
-                            className="list-group-item list-group-item-action"
-                        >
-                            Manage courses
-                        </Link>
                     </>
                 ) : (
-                    <>
+                    <div className="text-center">
                         <h2>Unauthorized</h2>
-                    </>
+                    </div>
                 )}
             </div>
         </>
     )
 }
 
-export default Manage;
+export default ManageCourses;
