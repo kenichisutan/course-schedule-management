@@ -4,6 +4,7 @@ from flask_cors import CORS
 import accounts
 import auth
 import database
+from api import courses
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -40,9 +41,47 @@ def api_admin_authenticate():
 def api_admin_endpoint():
     return auth.verifyAdminCookie()
 
+
 @app.route('/users', methods=[ 'GET' ])
 def api_retrieve_users():
     return accounts.retrieveUsers(con)
+
+
+@app.route('/insert-course', methods=[ 'POST' ])
+def api_insert_course():
+    data = request.json
+    print(data)
+    for course_key, course_details in data.items():
+        if course_key == '0':
+            continue  # Skip entries with '0' key
+
+        semester = course_details[ "semester" ]
+        subject = course_details[ "subject" ]
+        department = course_details[ "department" ]
+        number = course_details[ "number" ]
+        section = course_details[ "section" ]
+        courseName = course_details[ "courseName" ]
+        credits = course_details[ "credits" ]
+        day = course_details[ "day" ]
+        startTime = course_details[ "startTime" ]
+        endTime = course_details[ "endTime" ]
+        instructor = course_details[ "instructor" ]
+        crn = course_details[ "crn" ]
+        genEd = course_details[ "genEd" ]
+        prior = course_details[ "prior" ]
+        specialInfo = course_details[ "specialInfo" ]
+
+        if not courses.insertCourse(con, semester, subject, department, number, section,
+                                    courseName, credits, day, startTime, endTime,
+                                    instructor, crn, genEd, prior, specialInfo):
+            # Handle insertion failure
+            pass
+        else:
+            return jsonify({"error": True,
+                            "message": "Invalid JSON payload"}), 400
+
+    return jsonify({"error": False,
+                    "message": "Course(s) added successfully"}), 200
 
 
 if __name__ == '__main__':
