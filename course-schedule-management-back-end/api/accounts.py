@@ -59,7 +59,7 @@ def main():
                                          host="127.0.0.1",
                                          database="course-schedule")
     username = "admin"
-    password = sha256_crypt.hash("thisIsAPassword")
+    password = sha256_crypt.hash("admin")
     email = "admin@admin.com"
     accountType = "admin"
 
