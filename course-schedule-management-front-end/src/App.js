@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import Alert from "./components/Alert";
+import Cookies from "js-cookie";
 
 function App() {
     const [jwtToken, setJwtToken] = useState("");
@@ -11,6 +12,9 @@ function App() {
     const navigate = useNavigate();
 
     const logOut = () => {
+        // Clear all cookies
+        Object.keys(Cookies.get()).forEach(cookie => Cookies.remove(cookie));
+
         setJwtToken("");
         setIsAdmin(false)
         setAlertClassName("alert-success");
