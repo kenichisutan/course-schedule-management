@@ -1,6 +1,5 @@
-import { useState } from "react";
+import {useState} from "react";
 import Input from "./form/Input";
-import {useNavigate, useOutletContext} from "react-router-dom";
 import "../styles.css";
 import MultiInput from "./form/MultiInput";
 import Checkbox from "./form/Checkbox";
@@ -29,9 +28,6 @@ const New = () => {
     const [prior, setPrior] = useState("");
     const [info, setInfo] = useState("");
 
-    const { setJwtToken, setAlertClassName, setAlertMessage } = useOutletContext() || {};
-
-    const navigate = useNavigate();
 
     const semesterOptions = [
         { value: "Summer 2023", label: "Summer 2023" },
@@ -89,28 +85,6 @@ const New = () => {
             "info": info, // special info
             },
         ]
-
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        };
-
-        // TODO: unfinished code for database integration
-        // fetch('http://localhost:5000/api/courses', requestOptions)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         if (data.error) {
-        //             setAlertClassName("alert-danger");
-        //             setAlertMessage(data.message);
-        //         } else {
-        //             console.log(data)
-        //             navigate("/courses")
-        //         }
-        //     })
-        //     .catch(error => {
-        //         console.log(error)
-        //     })
 
         // Excel export
         const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
