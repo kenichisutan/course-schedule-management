@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 
 const Courses = () => {
     const [selectedSemester, setSelectedSemester] = useState('Spring 2023');
+    const [updatedSemester, setUpdatedSemester] = useState('');
     const [courses, setCourses] = useState([]);
 
     let timetableData;
@@ -54,6 +55,7 @@ const Courses = () => {
                     timetableData = timetableDataSummer;
                 }
                 setCourses(timetableData);
+                setUpdatedSemester(selectedSemester);
             })
             .catch(error => {
                 console.log(error);
@@ -71,10 +73,20 @@ const Courses = () => {
                     <option value="Summer 2023">Summer 2023</option>
                     <option value="Fall 2023">Fall 2023</option>
                 </select>
-                <button type="button" className="btn btn-primary" onClick={handleSemesterChange}>
-                    Load semester
-                </button>
+                <br></br>
+                <div className="col text-end">
+                    <button type="button" className="btn btn-primary" onClick={handleSemesterChange}>
+                        Load semester
+                    </button>
+                </div>
                 <hr />
+                <div className="col text-start">
+                    {(updatedSemester !== '' &&
+                        <>
+                            Now showing courses for {updatedSemester}
+                        </>
+                    )}
+                </div>
                 <table className="table table-striped table-hover">
                     <thead>
                     <tr>
