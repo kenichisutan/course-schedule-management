@@ -10,8 +10,13 @@ const ManageCourses = () => {
     const [springCourses, setSpringCourses] = useState([]);
     const [summerCourses, setSummerCourses] = useState([]);
     const [fallCourses, setFallCourses] = useState([]);
+    const [fillDatabasePressed, setFillDatabasePressed] = useState(false);
+    const [springSuccess, setSpringSuccess] = useState(false);
+    const [summerSuccess, setSummerSuccess] = useState(false);
+    const [fallSuccess, setFallSuccess] = useState(false);
 
     const fillDatabase = () => {
+        setFillDatabasePressed(true);
         const timetableDataSpringArray = Object.values(timetableDataSpring);
         const timetableDataSummerArray = Object.values(timetableDataSummer);
         const timetableDataFallArray = Object.values(timetableDataFall);
@@ -108,6 +113,7 @@ const ManageCourses = () => {
             .then(response => response.json())
             .then((data) => {
                 console.log(data.message);
+                setSpringSuccess(true);
                 requestOptions = {
                     method: 'POST',
                     headers: {
@@ -120,6 +126,7 @@ const ManageCourses = () => {
                     .then(response => response.json())
                     .then((data) => {
                         console.log(data.message);
+                        setSummerSuccess(true);
                         requestOptions = {
                             method: 'POST',
                             headers: {
@@ -131,6 +138,7 @@ const ManageCourses = () => {
                         fetch(fillDatabaseUrl, requestOptions)
                             .then(response => response.json())
                             .then((data) => {
+                                setFallSuccess(true);
                                 console.log(data.message);
                             })
                             .catch(error => {
@@ -193,6 +201,28 @@ const ManageCourses = () => {
                             <button type="button" className="btn btn-primary" onClick={fillDatabase}>
                                 Fill database (DO NOT PRESS UNLESS YOU KNOW WHAT YOU ARE DOING)
                             </button>
+                            {fillDatabasePressed ? (
+                                <div className="text-center">
+                                    <h5>Database filled</h5>
+                                    {springSuccess ? (
+                                        <h6>Spring 2023 courses added</h6>
+                                    ) : (
+                                        <></>
+                                    )}
+                                    {summerSuccess ? (
+                                        <h6>Summer 2023 courses added</h6>
+                                    ) : (
+                                        <></>
+                                    )}
+                                    {fallSuccess ? (
+                                        <h6>Fall 2023 courses added</h6>
+                                    ) : (
+                                        <></>
+                                    )}
+                                </div>
+                            ) : (
+                                <></>
+                            )}
                         </div>
                     </div>
                 ) : (
