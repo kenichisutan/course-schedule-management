@@ -13,7 +13,7 @@ def insertCourse(connection, semester, subject, department, number, section, cou
 
     if cursor.fetchone() is not None:
         print("ERROR: Course already in database")
-        return
+        return True
 
     # Add new course
     query = "INSERT INTO Courses (semester, subject, department, number, section," \
@@ -65,7 +65,7 @@ def retrieveCourseData(connection, semester):
                            'prior': prior,
                            'specialInfo': specialInfo})
 
-    print(jsonResult)
+    #print(jsonResult)
     cursor.close()
 
     return jsonResult, 200

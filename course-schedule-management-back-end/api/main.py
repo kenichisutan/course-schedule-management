@@ -50,7 +50,7 @@ def api_retrieve_users():
 @app.route('/insert-course', methods=[ 'POST' ])
 def api_insert_course():
     data = request.json
-    print(data)
+    #print(data)
     for course_key, course_details in data.items():
         if course_key == '0':
             continue  # Skip entries with '0' key
@@ -78,7 +78,7 @@ def api_insert_course():
             pass
         else:
             return jsonify({"error": True,
-                            "message": "Invalid JSON payload"}), 400
+                            "message": "An error occured"}), 400
 
     return jsonify({"error": False,
                     "message": "Course(s) added successfully"}), 200
