@@ -3,8 +3,6 @@ import Input from "./form/Input";
 import "../styles.css";
 import MultiInput from "./form/MultiInput";
 import Checkbox from "./form/Checkbox";
-import * as FileSaver from "file-saver";
-import * as XLSX from "sheetjs-style";
 
 const New = () => {
     const [semester, setSemester] = useState("");
@@ -27,7 +25,6 @@ const New = () => {
     const [specialInfo, setSpecialInfo] = useState("");
 
     // Retrieve from database
-    const [isSemesterSelected, setIsSemesterSelected] = useState(false);
     const [courses, setCourses] = useState([]);
 
     let coursesDataSpring;
@@ -36,6 +33,7 @@ const New = () => {
 
     let courseData;
 
+    // TODO: Provide hints for each field based on data in database
     const retrieveFromDatabase = () => {
         const payload = {
             semester: semester
@@ -77,6 +75,7 @@ const New = () => {
 
 
     const semesterOptions = [
+        { value: "", label: "Select a semester" },
         { value: "Spring 2023", label: "Spring 2023" },
         { value: "Summer 2023", label: "Summer 2023" },
         { value: "Fall 2023", label: "Fall 2023" },
@@ -436,14 +435,13 @@ const New = () => {
                     name="semesterCombobox"
                     onChange={(event) => {
                         setSemester(event.target.value)
-                        setIsSemesterSelected(true)
                         retrieveFromDatabase();
                     }}
                     options={semesterOptions}
                     value={semester}
                 />
                 {/* Remove bottom part when isSemesterSelected is false */}
-                {isSemesterSelected && (
+                {semester !== '' && (
                     <>
                         <MultiInput
                             title="Select a class type"
@@ -453,15 +451,18 @@ const New = () => {
                             options={classTypeOptions}
                             value={classType}
                         />
-                        {/*TODO: remove the need for a checkbox when selecting online*/}
-                        <Checkbox
-                            title="Has a room been secured with facilities?"
-                            message="Please secure a room with facilities before submitting this form."
-                            onChange={(event) => {
-                                console.log("Checkbox clicked");
-                                setRoomConfirm(event.target.checked);
-                            }}
-                        />
+                        {classType !== "Online" &&
+                            <>
+                                <Checkbox
+                                    title="Has a room been secured with facilities?"
+                                    message="Please secure a room with facilities before submitting this form."
+                                    onChange={(event) => {
+                                        console.log("Checkbox clicked");
+                                        setRoomConfirm(event.target.checked);
+                                    }}
+                                />
+                            </>
+                        }
 
                         <Input
                             title="Room Number"
