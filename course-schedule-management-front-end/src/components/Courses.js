@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 
 const Courses = () => {
-    const [selectedSemester, setSelectedSemester] = useState('Fall 2023');
+    const [selectedSemester, setSelectedSemester] = useState('Spring 2023');
     const [courses, setCourses] = useState([]);
 
     let timetableData;
@@ -10,10 +10,13 @@ const Courses = () => {
     let timetableDataSummer;
     let timetableDataFall;
 
-    const handleSemesterChange = (event) => {
-        setSelectedSemester(event.target.value);
+    const handleSemesterChange = () => {
         retrieveFromDatabase();
     };
+
+    const updateSemester = (event) => {
+        setSelectedSemester(event.target.value);
+    }
 
     // Utilize database instead of hard-coded data
 
@@ -38,6 +41,7 @@ const Courses = () => {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                console.log(selectedSemester)
                 // Convert object to array and set it as courses
                 if(selectedSemester === 'Fall 2023') {
                     timetableDataFall = Object.values(data);
@@ -62,11 +66,14 @@ const Courses = () => {
                 <h2>Courses</h2>
                 <label htmlFor="semesterSelect">Select Semester: </label>
                 <select class="form-select" aria-label="Default select example" id="semesterSelect"
-                        value={selectedSemester} onChange={handleSemesterChange}>
+                onChange={updateSemester}>
                     <option value="Spring 2023">Spring 2023</option>
                     <option value="Summer 2023">Summer 2023</option>
                     <option value="Fall 2023">Fall 2023</option>
                 </select>
+                <button type="button" className="btn btn-primary" onClick={handleSemesterChange}>
+                    Load semester
+                </button>
                 <hr />
                 <table className="table table-striped table-hover">
                     <thead>
