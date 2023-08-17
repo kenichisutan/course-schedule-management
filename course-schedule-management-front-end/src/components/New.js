@@ -461,17 +461,16 @@ const New = () => {
                                         setRoomConfirm(event.target.checked);
                                     }}
                                 />
+                                <Input
+                                    title="Room Number"
+                                    type="room-number"
+                                    className="form-control"
+                                    name="room-number"
+                                    autoComplete="room-number-new"
+                                    onChange={(event) => setRoomNumber(event.target.value)}
+                                />
                             </>
                         }
-
-                        <Input
-                            title="Room Number"
-                            type="room-number"
-                            className="form-control"
-                            name="room-number"
-                            autoComplete="room-number-new"
-                            onChange={(event) => setRoomNumber(event.target.value)}
-                        />
                         {/*TODO: create a list of options of departments from an existing file*/}
                         <MultiInput
                             title="Select a department"
