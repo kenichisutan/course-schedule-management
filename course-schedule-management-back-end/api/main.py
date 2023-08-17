@@ -84,6 +84,20 @@ def api_insert_course():
                     "message": "Course(s) added successfully"}), 200
 
 
+@app.route('/retrieve-course-data', methods=[ 'POST' ])
+def api_retrieve_course_data():
+    data = request.json
+    print(data)
+
+    if data:
+        semester = data.get('semester')
+    else:
+        return jsonify({"error": True,
+                        "message": "Invalid JSON payload"}), 400
+
+    return courses.retrieveCourseData(con, semester)
+
+
 if __name__ == '__main__':
     print("Server is starting...")
     print("Connecting to database...")
