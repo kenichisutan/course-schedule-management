@@ -15,6 +15,7 @@ import Users from "./components/Users";
 import ManageCourses from "./components/ManageCourses";
 import UsersNew from "./components/UsersNew";
 import User from "./components/User";
+import UserEdit from "./components/UserEdit";
 
 const isAuthenticated = () => {
     const accessToken = Cookies.get('access_token');
@@ -37,6 +38,7 @@ const router = (
                 <Route path="/manage/users" element={isAuthenticated() ? <Users /> : <Navigate to="/login" />} />
                 <Route path="/manage/users/new" element={isAuthenticated() ? <UsersNew /> : <Navigate to="/login" />} />
                 <Route path="/manage/user/:id" element={isAuthenticated() ? <User /> : <Navigate to="/login" />} />
+                <Route path="/manage/user/:id/edit" element={isAuthenticated() ? <UserEdit /> : <Navigate to="/login" />} />
                 <Route path="/manage/courses" element={isAuthenticated() ? <ManageCourses /> : <Navigate to="/login" />} />
                 {/* Catch-all route for unmatched routes */}
                 <Route path="*" element={<ErrorPage />} /> {/* Catch-all route for unmatched routes */}
