@@ -61,6 +61,34 @@ def api_retrieve_user():
     return accounts.retrieveUser(con, id)
 
 
+@app.route('/user-edit', methods=[ 'POST' ])
+def api_edit_user():
+    data = request.json
+    print(data)
+
+    if data:
+        id = data.get('id')
+        username = data.get('username')
+        password = data.get('password')
+        passwordConfirm = data.get('passwordConfirm')
+        email = data.get('email')
+        accountType = data.get('accountType')
+    else:
+        return jsonify({"error": True,
+                        "message": "Invalid JSON payload"}), 400
+
+    if password != passwordConfirm:
+        return jsonify({"error": True,
+                        "message": "Passwords do not match"}), 400
+
+    print(id, username, password, email, accountType)
+    # check if password and passwordConfirm are empty
+    if password is None and passwordConfirm is None:
+        return accounts.editUser(con, id, username, "", email, accountType)
+
+    return accounts.editUser(con, id, username, password, email, accountType)
+
+
 @app.route('/insert-course', methods=[ 'POST' ])
 def api_insert_course():
     data = request.json
