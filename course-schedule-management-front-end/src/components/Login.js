@@ -15,7 +15,6 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("username: " + username + ", password: " + password);
 
         // build the request payload
         let payload = {
