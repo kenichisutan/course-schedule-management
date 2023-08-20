@@ -6,6 +6,7 @@ const User = () => {
     let { id } = useParams();
 
     const [admin, setAdmin] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const handleAdminCheck = async () => {
         const requestOptions = {
@@ -68,26 +69,40 @@ const User = () => {
     useEffect(() => {
         handleAdminCheck();
         retrieveUser();
-    }, [id])
+    }, [id]);
+
+    // Wait for user data to load before rendering
+    useEffect(() => {
+        if (Object.keys(user).length > 0) {
+            setLoading(false);
+        }
+    }, [user]);
 
     return(
-        <>
-            {(admin ? (
-            <>
-            <div>
-                <h2>{user.username}</h2>
-                <small><em>{user.email}, ({user.accountType})</em></small>
-            </div>
-            </>
-        ) : (
-            <div className="text-center">
-                <h2>Unauthorized</h2>
-            </div>
-        ))}
+        <div className="text-center">
+            <h2>Users</h2>
             <div className="col text-end">
+                <Link to={`/manage/user/${user.userID}/edit`}><span className="badge bg-primary">Edit user</span></Link>
                 <Link to={`/manage/users`}><span className="badge bg-primary">Back</span></Link>
             </div>
-        </>
+            <hr />
+            {loading ? (
+                <div>Loading...</div>
+            ) : (
+                (admin ? (
+                <>
+                <div className="text-start">
+                    <h2>{user.username}</h2>
+                    <small><em>{user.email}, ({user.accountType})</em></small>
+                </div>
+                </>
+                ) : (
+                    <div className="text-center">
+                        <h2>Unauthorized</h2>
+                    </div>
+                ))
+            )}
+        </div>
     )
 }
 
