@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import Input from "./form/Input";
 
 const Courses = () => {
     const [users, setUsers] = useState([]);
@@ -69,11 +70,13 @@ const Courses = () => {
             <div className="text-center">
                 <h2>Users</h2>
                 <div className="col text-end">
+                    <Link to={`/manage/users/new`}><span className="badge bg-primary">Add User</span></Link>
                     <Link to={`/manage/`}><span className="badge bg-primary">Back</span></Link>
                 </div>
                 <hr />
                 {/* if admin is true, display the following */}
                 {admin ? (
+                    <>
                 <table className="table table-striped table-hover">
                     <thead>
                     <tr>
@@ -96,6 +99,7 @@ const Courses = () => {
                     )}
                     </tbody>
                 </table>
+                    </>
                 ) : (
                     <div className="text-center">
                         <h2>Unauthorized</h2>

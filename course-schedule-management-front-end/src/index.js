@@ -13,6 +13,7 @@ import Cookies from "js-cookie";
 import Manage from "./components/Manage";
 import Users from "./components/Users";
 import ManageCourses from "./components/ManageCourses";
+import UsersNew from "./components/UsersNew";
 
 const isAuthenticated = () => {
     const accessToken = Cookies.get('access_token');
@@ -33,6 +34,7 @@ const router = (
                 <Route path="/cancel" element={isAuthenticated() ? <Cancel /> : <Navigate to="/login" />} />
                 <Route path="/manage" element={isAuthenticated() ? <Manage /> : <Navigate to="/login" />} />
                 <Route path="/manage/users" element={isAuthenticated() ? <Users /> : <Navigate to="/login" />} />
+                <Route path="/manage/users/new" element={isAuthenticated() ? <UsersNew /> : <Navigate to="/login" />} />
                 <Route path="/manage/courses" element={isAuthenticated() ? <ManageCourses /> : <Navigate to="/login" />} />
                 {/* Catch-all route for unmatched routes */}
                 <Route path="*" element={<ErrorPage />} /> {/* Catch-all route for unmatched routes */}
