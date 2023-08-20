@@ -19,7 +19,7 @@ def addNewAccount(connection, username, password, email, accountType):
     # Add new account
     query = "INSERT INTO Login (username, password, email, accountType)" \
             "VALUES (%s, %s, %s, %s)"
-    
+
     password = sha256_crypt.hash(password)
 
     cursor.execute(query, (username, password, email, accountType))
@@ -44,6 +44,32 @@ def retrieveUsers(connection):
         print("ERROR: No users found")
         return jsonify({"error": True,
                         "message": "No users found"}), 404
+
+    # Convert result to json
+    jsonResult = [ ]
+
+    for (userID, username, email, accountType) in cursor:
+        jsonResult.append({'userID': userID,
+                           'username': username,
+                           'email': email,
+                           'accountType': accountType})
+
+    cursor.close()
+
+    return jsonResult, 200
+
+
+def retrieveUser(connection, id):
+    cursor = connection.cursor()
+
+    query = "SELECT userID, username, email, accountType FROM Login WHERE userID = %s"
+
+    cursor.execute(query, (id,))
+
+    if cursor is None:
+        print("ERROR: No user found")
+        return jsonify({"error": True,
+                        "message": "No user found"}), 404
 
     # Convert result to json
     jsonResult = [ ]

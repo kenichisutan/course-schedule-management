@@ -47,6 +47,20 @@ def api_retrieve_users():
     return accounts.retrieveUsers(con)
 
 
+@app.route('/user', methods=[ 'POST' ])
+def api_retrieve_user():
+    data = request.json
+    print(data)
+
+    if data:
+        id = data.get('id')
+    else:
+        return jsonify({"error": True,
+                        "message": "Invalid JSON payload"}), 400
+
+    return accounts.retrieveUser(con, id)
+
+
 @app.route('/insert-course', methods=[ 'POST' ])
 def api_insert_course():
     data = request.json
