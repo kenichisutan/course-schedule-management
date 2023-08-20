@@ -13,16 +13,22 @@ def addNewAccount(connection, username, password, email, accountType):
 
     if cursor.fetchone() is not None:
         print("ERROR: Username or email already in use")
-        return
+        return jsonify({"error": True,
+                        "message": "Username or email already in use"}), 400
 
     # Add new account
     query = "INSERT INTO Login (username, password, email, accountType)" \
             "VALUES (%s, %s, %s, %s)"
+    
+    password = sha256_crypt.hash(password)
 
     cursor.execute(query, (username, password, email, accountType))
 
     connection.commit()
     cursor.close()
+
+    return jsonify({"error": False,
+                    "message": "User successfully added"}), 200
 
     print("New user added")
 
@@ -40,9 +46,9 @@ def retrieveUsers(connection):
                         "message": "No users found"}), 404
 
     # Convert result to json
-    jsonResult = []
+    jsonResult = [ ]
 
-    for(userID, username, email, accountType) in cursor:
+    for (userID, username, email, accountType) in cursor:
         jsonResult.append({'userID': userID,
                            'username': username,
                            'email': email,
@@ -53,19 +59,17 @@ def retrieveUsers(connection):
     return jsonResult, 200
 
 
-def main():
-    connection = mysql.connector.connect(user="root",
-                                         password="12345678",
-                                         host="127.0.0.1",
-                                         database="course-schedule")
-    username = "admin"
-    password = sha256_crypt.hash("admin")
-    email = "admin@admin.com"
-    accountType = "admin"
-
-    addNewAccount(connection, username, password, email, accountType)
-    addNewAccount(connection, "moderator", sha256_crypt.hash("moderator"), "moderator@moderator.com", "basic")
-
-    connection.close()
-
-main()
+# def main():
+#     connection = mysql.connector.connect(user="root",
+#                                          password="12345678",
+#                                          host="127.0.0.1",
+#                                          database="course-schedule")
+#     username = "admin"
+#     password = sha256_crypt.hash("admin")
+#     email = "admin@admin.com"
+#     accountType = "admin"
+#
+#     addNewAccount(connection, username, password, email, accountType)
+#     addNewAccount(connection, "moderator", sha256_crypt.hash("moderator"), "moderator@moderator.com", "basic")
+#
+#     connection.close()

@@ -98,6 +98,28 @@ def api_retrieve_course_data():
     return courses.retrieveCourseData(con, semester)
 
 
+@app.route('/new-user', methods=[ 'POST' ])
+def api_new_user():
+    data = request.json
+    print(data)
+
+    if data:
+        username = data.get('username')
+        password = data.get('password')
+        passwordConfirm = data.get('passwordConfirm')
+        email = data.get('email')
+        accountType = data.get('accountType')
+    else:
+        return jsonify({"error": True,
+                        "message": "Invalid JSON payload"}), 400
+
+    if password != passwordConfirm:
+        return jsonify({"error": True,
+                        "message": "Passwords do not match"}), 400
+
+    return accounts.addNewAccount(con, username, password, email, accountType)
+
+
 if __name__ == '__main__':
     print("Server is starting...")
     print("Connecting to database...")
