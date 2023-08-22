@@ -69,8 +69,8 @@ const Course = () => {
         <div className="text-center">
             <h2>Users</h2>
             <div className="col text-end">
-                <Link to={`/manage/user/${course.department}/${course.number}/edit`}><span className="badge bg-primary">Edit user</span></Link>
-                <Link to={`/manage/users`}><span className="badge bg-primary">Back</span></Link>
+                <Link to={`/courses/${course.department}/${course.number}/${course.section}/edit`}><span className="badge bg-primary">Edit course</span></Link>
+                <Link to={`/courses`}><span className="badge bg-primary">Back</span></Link>
             </div>
             <hr />
             {loading ? (
