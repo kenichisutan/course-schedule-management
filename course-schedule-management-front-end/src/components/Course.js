@@ -67,7 +67,7 @@ const Course = () => {
 
     return(
         <div className="text-center">
-            <h2>Users</h2>
+            <h2>Courses</h2>
             <div className="col text-end">
                 <Link to={`/courses/${course.department}/${course.number}/${course.section}/edit`}><span className="badge bg-primary">Edit course</span></Link>
                 <Link to={`/courses`}><span className="badge bg-primary">Back</span></Link>
@@ -79,7 +79,7 @@ const Course = () => {
                 <div className="text-start">
                     <h2>{course.courseName}</h2>
                     <h3>{course.semester}</h3>
-                    <small><em>{course.department} {course.number} {course.section}</em></small>
+                    <small><em>{course.department} {course.number} ({course.section})</em></small>
                     <br />
                     <br />
                     <h4>Course Details</h4>
