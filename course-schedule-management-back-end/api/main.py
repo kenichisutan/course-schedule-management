@@ -140,6 +140,24 @@ def api_retrieve_course_data():
     return courses.retrieveCourseData(con, semester)
 
 
+@app.route('/course', methods=[ 'POST' ])
+def api_retrieve_course():
+    data = request.json
+    print(data)
+
+    if data:
+        semester = data.get('semester')
+        department = data.get('department')
+        number = data.get('number')
+        section = data.get('section')
+    else:
+        return jsonify({"error": True,
+                        "message": "Invalid JSON payload"}), 400
+
+    return courses.retrieveCourse(con, semester, department, number, section)
+
+
+
 @app.route('/new-user', methods=[ 'POST' ])
 def api_new_user():
     data = request.json
