@@ -118,18 +118,19 @@ def editUser(connection, id, username, password, email, accountType):
     print("User edited")
 
 
-
 # def main():
 #     connection = mysql.connector.connect(user="root",
 #                                          password="12345678",
 #                                          host="127.0.0.1",
 #                                          database="course-schedule")
 #     username = "admin"
-#     password = sha256_crypt.hash("admin")
+#     password = "admin"
 #     email = "admin@admin.com"
 #     accountType = "admin"
 #
 #     addNewAccount(connection, username, password, email, accountType)
-#     addNewAccount(connection, "moderator", sha256_crypt.hash("moderator"), "moderator@moderator.com", "basic")
+#     addNewAccount(connection, "moderator", "moderator", "moderator@moderator.com", "basic")
 #
 #     connection.close()
+#
+# main()

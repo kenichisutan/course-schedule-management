@@ -38,6 +38,13 @@ async function launchPuppeteerSpring() {
              [department, number, section] = courseCode.split(" ");
         }
 
+        // remove () from section start and end
+
+        if(section) {
+            section = section.replace(/\(/g, "");
+            section = section.replace(/\)/g, "");
+        }
+
         const subject = inputData[1 + i];
         const courseName = inputData[3 + i];
         const credits = inputData[4 + i];
@@ -134,6 +141,13 @@ async function launchPuppeteerSummer() {
             [department, number, section] = courseCode.split(" ");
         }
 
+        // remove () from section start and end
+
+        if(section) {
+            section = section.replace(/\(/g, "");
+            section = section.replace(/\)/g, "");
+        }
+
         const subject = inputData[1 + i];
         const courseName = inputData[3 + i];
         const credits = inputData[4 + i];
@@ -228,6 +242,13 @@ async function launchPuppeteerFall() {
         let [department, number, section] = [null, null, null];
         if(courseCode) {
             [department, number, section] = courseCode.split(" ");
+        }
+
+        // remove () from section start and end
+
+        if(section) {
+            section = section.replace(/\(/g, "");
+            section = section.replace(/\)/g, "");
         }
 
         const subject = inputData[1 + i];
