@@ -112,10 +112,12 @@ const Courses = () => {
                             <td>
                                 <Link to={`/department/${course.department}`}>{course.subject}</Link>
                             </td>
-                            <td>{course.department} {course.number} ({course.section})</td>
                             <td>
-                                <Link to={`/course/${removeWhitespace(course.semester)}/${course.department}/${course.number}/${course.section}`}>{course.courseName}</Link>
+                                <Link to={`/course/${removeWhitespace(course.semester)}/${course.department}/${course.number}/${course.section}`}>
+                                    {course.department} {course.number} ({course.section})
+                                </Link>
                             </td>
+                            <td>{course.courseName}</td>
                             <td>{course.credits}</td>
                             <td>{course.day} {course.startTime} - {course.endTime}</td>
                             <td>{course.instructor}</td>
