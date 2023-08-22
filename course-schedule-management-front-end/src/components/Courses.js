@@ -108,7 +108,7 @@ const Courses = () => {
                             <td>
                                 <Link to={`/department/${course.department}`}>{course.subject}</Link>
                             </td>
-                            <td>{course.department} {course.number}</td>
+                            <td>{course.department} {course.number} {course.section}</td>
                             <td>
                                 <Link to={`/course/${course.courseName}`}>{course.courseName}</Link>
                             </td>
