@@ -16,6 +16,7 @@ import ManageCourses from "./components/ManageCourses";
 import UsersNew from "./components/UsersNew";
 import User from "./components/User";
 import UserEdit from "./components/UserEdit";
+import Course from "./components/Course";
 
 const isAuthenticated = () => {
     const accessToken = Cookies.get('access_token');
@@ -30,6 +31,7 @@ const router = (
                 <Route index element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/courses" element={<Courses />} />
+                <Route path="/course/:semester/:department/:number/:section" element={<Course />} />
                 {/* Protected routes */}
                 <Route path="/new" element={isAuthenticated() ? <New /> : <Navigate to="/login" />} />
                 <Route path="/update" element={isAuthenticated() ? <Update /> : <Navigate to="/login" />} />

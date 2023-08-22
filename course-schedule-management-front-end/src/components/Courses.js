@@ -62,6 +62,10 @@ const Courses = () => {
             });
     }
 
+    function removeWhitespace(str) {
+        return str.replace(/\s/g, '');
+    }
+
     return(
         <>
             <div className="text-center">
@@ -110,7 +114,7 @@ const Courses = () => {
                             </td>
                             <td>{course.department} {course.number} {course.section}</td>
                             <td>
-                                <Link to={`/course/${course.courseName}`}>{course.courseName}</Link>
+                                <Link to={`/course/${removeWhitespace(course.semester)}/${course.department}/${course.number}/${course.section}`}>{course.courseName}</Link>
                             </td>
                             <td>{course.credits}</td>
                             <td>{course.day} {course.startTime} - {course.endTime}</td>
