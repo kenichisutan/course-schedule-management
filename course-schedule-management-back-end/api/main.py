@@ -157,6 +157,35 @@ def api_retrieve_course():
     return courses.retrieveCourse(con, semester, department, number, section)
 
 
+@app.route('/course-edit', methods=[ 'POST' ])
+def api_edit_course():
+    data = request.json
+    print(data)
+
+    if data:
+        semester = data.get('semester')
+        subject = data.get('subject')
+        department = data.get('department')
+        number = data.get('number')
+        section = data.get('section')
+        courseName = data.get('courseName')
+        credits = data.get('credits')
+        day = data.get('day')
+        startTime = data.get('startTime')
+        endTime = data.get('endTime')
+        instructor = data.get('instructor')
+        crn = data.get('crn')
+        genEd = data.get('genEd')
+        prior = data.get('prior')
+        specialInfo = data.get('specialInfo')
+    else:
+        return jsonify({"error": True,
+                        "message": "Invalid JSON payload"}), 400
+
+    return courses.editCourse(con, semester, subject, department, number, section,
+                              courseName, credits, day, startTime, endTime,
+                              instructor, crn, genEd, prior, specialInfo)
+
 
 @app.route('/new-user', methods=[ 'POST' ])
 def api_new_user():

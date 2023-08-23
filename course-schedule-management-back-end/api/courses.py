@@ -45,10 +45,10 @@ def retrieveCourseData(connection, semester):
                         "message": "No courses found"}), 404
 
     # Convert result to json
-    jsonResult = []
+    jsonResult = [ ]
 
-    for(semester, subject, department, number, section, courseName, credits, day, startTime,
-        endTime, instructor, crn, genEd, prior, specialInfo) in cursor:
+    for (semester, subject, department, number, section, courseName, credits, day, startTime,
+         endTime, instructor, crn, genEd, prior, specialInfo) in cursor:
         jsonResult.append({'semester': semester,
                            'subject': subject,
                            'department': department,
@@ -65,7 +65,7 @@ def retrieveCourseData(connection, semester):
                            'prior': prior,
                            'specialInfo': specialInfo})
 
-    #print(jsonResult)
+    # print(jsonResult)
     cursor.close()
 
     return jsonResult, 200
@@ -85,10 +85,10 @@ def retrieveCourse(connection, semester, department, number, section):
 
     # Convert result to json
 
-    jsonResult = []
+    jsonResult = [ ]
 
-    for(semester, subject, department, number, section, courseName, credits, day, startTime,
-        endTime, instructor, crn, genEd, prior, specialInfo) in cursor:
+    for (semester, subject, department, number, section, courseName, credits, day, startTime,
+         endTime, instructor, crn, genEd, prior, specialInfo) in cursor:
         jsonResult.append({'semester': semester,
                            'subject': subject,
                            'department': department,
@@ -105,7 +105,42 @@ def retrieveCourse(connection, semester, department, number, section):
                            'prior': prior,
                            'specialInfo': specialInfo})
 
-    #print(jsonResult)
+    # print(jsonResult)
     cursor.close()
 
     return jsonResult, 200
+
+
+def editCourse(connection, semester, subject, department, number, section, courseName, credits, day,
+               startTime, endTime, instructor, crn, genEd, prior, specialInfo):
+    cursor = connection.cursor()
+
+    # Verify that course is already in database
+    query = "SELECT * FROM Courses WHERE semester = %s " \
+            "AND department = %s AND number = %s AND section = %s"
+    cursor.execute(query, (semester, department, number, section))
+
+    if cursor.fetchone() is None:
+        print("ERROR: Course not in database")
+        return jsonify({"error": True,
+                        "message": "No courses found"}), 404
+
+    # Edit course
+    query = "UPDATE Courses SET semester = %s, subject = %s, department = %s, number = %s, section = %s," \
+            "courseName = %s, credits = %s, day = %s, startTime = %s, endTime = %s, instructor = %s, crn = %s," \
+            "genEd = %s, prior = %s, specialInfo = %s " \
+            "WHERE semester = %s AND subject = %s AND department = %s " \
+            "AND number = %s AND section = %s"
+
+    cursor.execute(query, (semester, subject, department, number, section,
+                            courseName, credits, day, startTime, endTime,
+                            instructor, crn, genEd, prior, specialInfo,
+                            semester, subject, department, number, section))
+
+    connection.commit()
+    cursor.close()
+
+    print("Course edited")
+
+    return jsonify({"error": False,
+                    "message": "Course successfully edited"}), 200
