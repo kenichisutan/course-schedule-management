@@ -106,8 +106,7 @@ const CourseEdit = (props) => {
     };
 
     useEffect(() => {
-        handleAdminCheck();
-        retrieveCourse();
+        handleAdminCheck().then(retrieveCourse());
     }, [semester, department, number]);
 
     // Wait for user data to load before rendering
