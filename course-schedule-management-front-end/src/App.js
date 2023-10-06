@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import Alert from "./components/Alert";
 import Cookies from "js-cookie";
+import "./styles.css"
 
 function App() {
     const [jwtToken, setJwtToken] = useState("");
@@ -46,16 +47,12 @@ function App() {
     return (
         <div className="container">
             <div className="row">
-                <div className="col">
-                    <h1 className="mt-3">Course Schedule Management</h1>
-                </div>
                 <div className="col text-end">
                     {jwtToken === ""
                         ? <Link to="/login"><a href="#!"><span className="badge bg-success">Login</span></a></Link>
                         : <a href="#!" onClick={logOut}><span className="badge bg-danger">Logout</span></a>
                     }
                 </div>
-                <hr className="mb-3"></hr>
             </div>
             <div className="row">
                 <div className="col-md-2">
