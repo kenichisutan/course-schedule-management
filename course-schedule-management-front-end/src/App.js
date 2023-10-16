@@ -3,6 +3,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import Alert from "./components/Alert";
 import Cookies from "js-cookie";
 import "./styling/styles.css"
+import "./styling/custom_bootstrap.css"
 import templeLogo from "./assets/images/temple-logo-t-box.svg"
 import templeSafetyBg from "./assets/images/safety_bg.png"
 
