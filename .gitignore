@@ -220,3 +220,6 @@ course-schedule-management-front-end/src/data/TimetableDataFall.js
 course-schedule-management-front-end/src/data/TimetableDataSpring.js
 course-schedule-management-front-end/src/data/TimetableDataSummer.js
 course-schedule-management-front-end/src/Excelexport.js
+
+course-schedule-management-front-end/src/styling/custom_bootstrap.css
+course-schedule-management-front-end/src/styling/custom_bootstrap.css.map
