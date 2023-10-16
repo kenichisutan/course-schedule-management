@@ -1,6 +1,6 @@
 import {useState} from "react";
 import Input from "./form/Input";
-import "../styling/styles.css";
+import "../styles/styles.css";
 import MultiInput from "./form/MultiInput";
 import Checkbox from "./form/Checkbox";
 
