@@ -33,28 +33,32 @@ To begin using the Course Schedule Management tool, follow these steps:
     ```bash
    npm install
     ```
+   
+4. Compile bootstrap CSS through SASS:
+    ```bash
+    sass .\src\scss\custom.scss .\src\styles\custom_bootstrap.css
+    ```
 
-4. Start the development server:
+5. Start the development server:
     ```bash
     npm start
      ```
    
-5. Navigate to the project back-end directory:
+6. Navigate to the project back-end directory:
    ```bash
    cd course-schedule-management/course-schedule-management-backend
     ```
-   
-6. Run the back-end server:
+7. Run the back-end server:
    ```bash
    python app.py
     ```
-   
-7. Setup database through provided SQL file:
+
+8. Setup database through provided SQL file:
     ```
     course-schedule-management/course-schedule-management-backend/sql/database-creation.sql
     ```
-   
-8. Ensure local mySQL database is running:
+
+9. Ensure local mySQL database is running:
     ```
     user: root
     password: 12345678
